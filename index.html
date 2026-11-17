@@ -1,0 +1,840 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveCar | Locação de Veículos e Pequenos Fretes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        },
+                        accent: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-slate-800 font-sans antialiased selection:bg-brand-600 selection:text-white">
+
+    <!-- Navbar Minimalista Flutuante -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-18 py-3">
+                <!-- Logo -->
+                <div class="flex items-center gap-2.5 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="w-10 h-10 bg-brand-600 rounded-2xl flex items-center justify-center text-white shadow-md shadow-brand-600/20">
+                        <i class="fa-solid fa-route text-lg"></i>
+                    </div>
+                    <span class="text-xl font-extrabold tracking-tight text-slate-900">Move<span class="text-brand-600">Car</span></span>
+                </div>
+
+                <!-- Menu Desktop Centralizado -->
+                <nav class="hidden md:flex items-center bg-stone-100 px-2 py-1.5 rounded-2xl border border-stone-200/70">
+                    <a href="#como-funciona" class="px-4 py-1.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition">Como Funciona</a>
+                    <a href="#frota" class="px-4 py-1.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition">Veículos & Carretos</a>
+                    <a href="#pedidos-abertos" class="px-4 py-1.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition">Mural de Fretes</a>
+                    <a href="#politicas" class="px-4 py-1.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition">Políticas</a>
+                </nav>
+
+                <!-- CTA Header & Mobile Toggle -->
+                <div class="flex items-center gap-3">
+                    <span class="hidden lg:inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 mr-1">
+                        <i class="fa-solid fa-envelope text-brand-600"></i> financeiroautocaraluguel@gmail.com
+                    </span>
+                    <button onclick="openPartnerModal()" class="hidden sm:inline-flex items-center gap-2 bg-brand-50 hover:bg-brand-100 text-brand-700 text-sm font-bold px-4 py-2.5 rounded-xl transition">
+                        Quero ser Parceiro
+                    </button>
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl text-slate-600 hover:bg-stone-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-stone-200 px-4 pt-2 pb-5 space-y-2 shadow-lg">
+            <a href="#como-funciona" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-stone-50">Como Funciona</a>
+            <a href="#frota" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-stone-50">Veículos & Carretos</a>
+            <a href="#pedidos-abertos" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-stone-50">Mural de Fretes</a>
+            <a href="#politicas" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-stone-50">Políticas & Termos</a>
+            <button onclick="toggleMobileMenu(); openPartnerModal()" class="w-full text-left px-3 py-2.5 rounded-xl text-base font-bold text-brand-600 hover:bg-brand-50">Cadastrar meu Veículo</button>
+        </div>
+    </header>
+
+    <!-- Hero Section com Layout Editorial Claro + Simulador Horizontal -->
+    <section class="relative bg-gradient-to-b from-brand-50/80 via-white to-stone-50 pt-10 pb-16 lg:pt-16 lg:pb-24 border-b border-stone-200/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Cabeçalho Centralizado -->
+            <div class="text-center max-w-3xl mx-auto space-y-5 mb-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-stone-200 shadow-sm text-xs sm:text-sm font-semibold text-brand-700">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                    Intermediação direta entre clientes e proprietários
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                    Alugue um carro ou solicite um <span class="text-brand-600">pequeno carreto</span> sem burocracia.
+                </h1>
+                <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    Conectamos você a proprietários verificados para diárias de veículos ou transporte de cargas parciais, eletrodomésticos e caixas.
+                </p>
+            </div>
+
+            <!-- Card Horizontal de Cotação / Intermediação -->
+            <div id="simulador" class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 p-5 sm:p-8 border border-stone-200">
+                <!-- Abas de Modalidade -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-stone-100">
+                    <div class="inline-flex p-1.5 bg-stone-100 rounded-2xl w-full sm:w-auto">
+                        <button type="button" id="tab-frete" onclick="switchMode('frete')" class="flex-1 sm:flex-initial flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-sm font-bold transition-all bg-brand-600 text-white shadow-sm">
+                            <i class="fa-solid fa-truck-pickup"></i>
+                            <span>Pequena Mudança</span>
+                        </button>
+                        <button type="button" id="tab-locacao" onclick="switchMode('locacao')" class="flex-1 sm:flex-initial flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-slate-900">
+                            <i class="fa-solid fa-car"></i>
+                            <span>Alugar Carro</span>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-500">
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-brand-600"></i> Seguro incluso</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-box-open text-accent-500"></i> Apenas cargas parciais</span>
+                    </div>
+                </div>
+
+                <!-- Formulário Pequena Mudança / Carreto -->
+                <form id="form-frete" onsubmit="handleQuoteSubmit(event, 'frete')" class="space-y-5">
+                    <div class="bg-orange-50/80 border border-orange-200/80 rounded-2xl p-3.5 flex items-start gap-3 text-xs text-orange-900">
+                        <i class="fa-solid fa-circle-exclamation mt-0.5 text-accent-600 text-sm"></i>
+                        <span><strong>Importante:</strong> Modalidade exclusiva para pequenas mudanças (itens avulsos, sofás, geladeiras, caixas). Não realizamos mudanças residenciais completas.</span>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Retirada</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-location-dot absolute left-3.5 top-3 text-slate-400"></i>
+                                <input type="text" id="frete-origem" required placeholder="Bairro / Cidade" class="w-full pl-10 pr-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Destino</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-flag-checkered absolute left-3.5 top-3 text-slate-400"></i>
+                                <input type="text" id="frete-destino" required placeholder="Bairro / Cidade" class="w-full pl-10 pr-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Porte do Veículo</label>
+                            <select id="frete-porte" onchange="updateEstimate()" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <option value="95">Fiorino (Caixas / Poucos itens)</option>
+                                <option value="145">Van / Pick-up (1 a 3 móveis)</option>
+                                <option value="210">VUC (Quarto ou escritório)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Ajudante</label>
+                            <select id="frete-ajudante" onchange="updateEstimate()" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <option value="0">Sem ajudante</option>
+                                <option value="60">Motorista ajuda (+R$ 60)</option>
+                                <option value="110">Motorista + 1 ajudante (+R$ 110)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-12 gap-4 items-end">
+                        <div class="md:col-span-6">
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Descrição dos itens</label>
+                            <input type="text" id="frete-itens" required placeholder="Ex: 1 geladeira, 1 máquina de lavar e 5 caixas" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                        </div>
+                        <div class="md:col-span-3 bg-stone-50 px-4 py-2 rounded-xl border border-stone-200 flex flex-col justify-center">
+                            <span class="text-[11px] text-slate-500 font-medium">Estimativa média</span>
+                            <span id="frete-estimativa" class="text-xl font-extrabold text-brand-700">R$ 95,00</span>
+                        </div>
+                        <div class="md:col-span-3">
+                            <button type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold py-3 px-5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                                <span>Publicar Pedido</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Formulário Locação de Carros (Oculto inicialmente) -->
+                <form id="form-locacao" onsubmit="handleQuoteSubmit(event, 'locacao')" class="hidden space-y-5">
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Local de Retirada</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-map-pin absolute left-3.5 top-3 text-slate-400"></i>
+                                <input type="text" id="locacao-local" required placeholder="Cidade ou Bairro" class="w-full pl-10 pr-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Categoria</label>
+                            <select id="locacao-categoria" onchange="updateEstimate()" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <option value="110">Compacto (R$ 110/dia)</option>
+                                <option value="150">Sedan Conforto (R$ 150/dia)</option>
+                                <option value="195">SUV / Família (R$ 195/dia)</option>
+                                <option value="180">Utilitário Leve (R$ 180/dia)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Data Retirada</label>
+                            <input type="date" id="locacao-inicio" required class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Diárias</label>
+                            <input type="number" id="locacao-dias" min="1" max="30" value="3" onchange="updateEstimate()" oninput="updateEstimate()" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-stone-100">
+                        <div class="bg-stone-50 px-4 py-2 rounded-xl border border-stone-200 w-full sm:w-auto">
+                            <span class="text-xs text-slate-500 block">Total estimado (com seguro básico)</span>
+                            <span id="locacao-estimativa" class="text-xl font-extrabold text-brand-700">R$ 330,00</span>
+                        </div>
+                        <button type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-brand-600 text-white font-bold py-3.5 px-8 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                            <span>Buscar Veículos</span>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vitrine de Veículos & Parceiros Disponíveis (Movida para cima no novo layout) -->
+    <section id="frota" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+                <span class="text-brand-600 font-bold text-xs uppercase tracking-widest">Frota Verificada</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Veículos & Carretos Disponíveis</h2>
+                <p class="text-slate-600 mt-1 text-sm sm:text-base">Escolha diretamente um parceiro avaliado na sua região.</p>
+            </div>
+
+            <!-- Filtros -->
+            <div class="flex flex-wrap gap-2 bg-white p-1.5 rounded-2xl border border-stone-200 shadow-sm">
+                <button onclick="filterFleet('todos')" class="filter-btn active px-4 py-2 rounded-xl text-sm font-semibold bg-brand-600 text-white transition" data-filter="todos">Todos</button>
+                <button onclick="filterFleet('carreto')" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-stone-100 transition" data-filter="carreto">Pequenas Mudanças</button>
+                <button onclick="filterFleet('locacao')" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-stone-100 transition" data-filter="locacao">Locação de Carros</button>
+            </div>
+        </div>
+
+        <!-- Grid de Cards -->
+        <div id="fleet-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Preenchido dinamicamente via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Seção Como Funciona (Layout em Faixa Horizontal) -->
+    <section id="como-funciona" class="py-16 bg-white border-y border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-4 space-y-3">
+                    <span class="text-brand-600 font-bold text-xs uppercase tracking-widest">Segurança na Intermediação</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Como funciona a MoveCar</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">Processo 100% digital para conectar quem precisa de mobilidade ou transporte rápido a quem possui o veículo ideal.</p>
+                </div>
+
+                <div class="lg:col-span-8 grid sm:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-2xl bg-stone-50 border border-stone-200/80">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold mb-4">1</div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Simule ou Escolha</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">Publique os detalhes do seu pequeno carreto ou selecione um carro disponível na vitrine.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-stone-50 border border-stone-200/80">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold mb-4">2</div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Combine os Detalhes</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">Receba confirmação de parceiros verificados com valores transparentes e sem surpresas.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-stone-50 border border-stone-200/80">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold mb-4">3</div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Conclua com Garantia</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">O repasse ao parceiro só ocorre após a entrega dos itens ou retirada do veículo vistoriado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mural de Solicitações Recentes -->
+    <section id="pedidos-abertos" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+            <div>
+                <div class="inline-flex items-center gap-2 text-xs font-bold text-brand-700 bg-brand-100 px-3 py-1 rounded-full mb-2">
+                    <span class="w-2 h-2 rounded-full bg-brand-600 animate-ping"></span>
+                    Demandas em tempo real
+                </div>
+                <h2 class="text-2xl font-extrabold text-slate-900">Mural de Solicitações</h2>
+                <p class="text-sm text-slate-600">Pedidos recentes publicados por clientes na plataforma.</p>
+            </div>
+            <button onclick="scrollToSimulator()" class="self-start sm:self-auto bg-white hover:bg-stone-100 text-slate-900 border border-stone-300 font-semibold px-4 py-2.5 rounded-xl text-sm shadow-sm transition">
+                + Novo pedido
+            </button>
+        </div>
+
+        <div id="requests-list" class="grid md:grid-cols-2 gap-4">
+            <!-- Preenchido dinamicamente via JS -->
+        </div>
+    </section>
+
+    <!-- Banner Parceiro -->
+    <section class="pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">
+            <div class="space-y-3 max-w-xl text-center lg:text-left">
+                <span class="text-brand-400 text-xs font-bold uppercase tracking-widest">Para Proprietários e Motoristas</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold">Rentabilize seu veículo na MoveCar</h2>
+                <p class="text-slate-300 text-sm sm:text-base">Cadastre seu carro de passeio para locação por diária ou seu utilitário para pequenos carretos na sua região.</p>
+            </div>
+            <button onclick="openPartnerModal()" class="w-full sm:w-auto bg-brand-500 hover:bg-brand-600 text-white font-bold px-8 py-4 rounded-2xl shadow-lg transition whitespace-nowrap">
+                Cadastrar como Parceiro
+            </button>
+        </div>
+    </section>
+
+    <!-- Página / Seção de Políticas e Termos de Intermediação -->
+    <section id="politicas" class="py-16 bg-stone-100/70 border-t border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mb-10">
+                <span class="text-brand-600 font-bold text-xs uppercase tracking-widest">Transparência & Regras</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Políticas da Plataforma</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Conheça as diretrizes de privacidade, limites de carga para pequenas mudanças e regras de locação da MoveCar.</p>
+            </div>
+
+            <!-- Abas de Navegação das Políticas -->
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden">
+                <div class="flex flex-wrap border-b border-stone-200 bg-stone-50/80 p-2 gap-2">
+                    <button type="button" onclick="switchPolicyTab('privacidade')" id="pol-tab-privacidade" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-brand-600 text-white transition">
+                        <i class="fa-solid fa-user-shield mr-1.5"></i>Política de Privacidade
+                    </button>
+                    <button type="button" onclick="switchPolicyTab('mudancas')" id="pol-tab-mudancas" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-white transition">
+                        <i class="fa-solid fa-box-open mr-1.5"></i>Regras de Pequenas Mudanças
+                    </button>
+                    <button type="button" onclick="switchPolicyTab('locacao')" id="pol-tab-locacao" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-white transition">
+                        <i class="fa-solid fa-car-side mr-1.5"></i>Termos de Locação
+                    </button>
+                    <button type="button" onclick="switchPolicyTab('cancelamento')" id="pol-tab-cancelamento" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-white transition">
+                        <i class="fa-solid fa-rotate-left mr-1.5"></i>Cancelamento e Repasses
+                    </button>
+                </div>
+
+                <!-- Conteúdo: Política de Privacidade -->
+                <div id="pol-content-privacidade" class="p-6 sm:p-8 space-y-4 text-sm text-slate-600 leading-relaxed">
+                    <h3 class="text-lg font-extrabold text-slate-900">1. Coleta e Proteção de Dados (LGPD)</h3>
+                    <p>A <strong>MoveCar Intermediações Ltda.</strong> coleta apenas os dados estritamente necessários para validar a identidade de clientes, motoristas e proprietários de veículos (nome completo, e-mail, CNH válida e documentação do veículo).</p>
+                    <h3 class="text-lg font-extrabold text-slate-900 pt-2">2. Compartilhamento Restrito</h3>
+                    <p>Seus dados de contato e endereço de retirada/entrega são compartilhados exclusivamente com o parceiro verificado após a confirmação da intermediação. Não comercializamos informações pessoais com terceiros.</p>
+                    <h3 class="text-lg font-extrabold text-slate-900 pt-2">3. Canal Financeiro e Solicitações de Dados</h3>
+                    <p>Para dúvidas sobre faturamento, recibos ou exclusão de cadastro, utilize nosso canal oficial: <strong class="text-brand-700">financeiroautocaraluguel@gmail.com</strong>.</p>
+                </div>
+
+                <!-- Conteúdo: Regras de Pequenas Mudanças -->
+                <div id="pol-content-mudancas" class="hidden p-6 sm:p-8 space-y-4 text-sm text-slate-600 leading-relaxed">
+                    <h3 class="text-lg font-extrabold text-slate-900">1. Escopo Exclusivo de Carga Parcial</h3>
+                    <p>A plataforma atua exclusivamente na intermediação de <strong>pequenos carretos e mudanças parciais</strong> (eletrodomésticos avulsos, sofás, camas, mesas, caixas e equipamentos de escritório). Não realizamos mudanças residenciais ou comerciais completas.</p>
+                    <h3 class="text-lg font-extrabold text-slate-900 pt-2">2. Embalagem e Ajudantes</h3>
+                    <p>Os itens devem estar devidamente embalados e prontos para embarque no horário agendado. A contratação de ajudante adicional deve ser informada no ato da cotação.</p>
+                    <h3 class="text-lg font-extrabold text-slate-900 pt-2">3. Itens Proibidos</h3>
+                    <p>É estritamente proibido o transporte de cargas ilícitas, produtos inflamáveis, químicos perigosos, animais vivos ou cargas acima da capacidade nominal do utilitário contratado.</p>
+                </div>
+
+                <!-- Conteúdo: Termos de Locação -->
+                <div id="pol-content-locacao" class="hidden p-6 sm:p-8 space-y-4 text-sm text-slate-600 leading-relaxed">
+                    <h3 class="text-lg font-extrabold text-slate-900">1. Requisitos para Locatários</h3>
+                    <p>Para alugar veículos pela MoveCar, o condutor deve possuir idade mínima de 21 anos e Carteira Nacional de Habilitação (CNH) definitiva válida na categoria compatível.</p>
+                    <h3 class="text-lg font-extrabold text-slate-900 pt-2">2. Vistoria Digital Obrigatória</h3>
+                    <p>Na retirada e na devolução do veículo, ambas as partes realizam o checklist fotográfico de lataria, pneus, nível de combustível e quilometragem para total segurança jurídica.</p>
+                    <h3 class="text-lg font-extrabold text-slate-900 pt-2">3. Combustível e Multas</h3>
+                    <p>O veículo deve ser devolvido com o mesmo nível de combustível da retirada. Infrações de trânsito ocorridas durante o período de locação são de responsabilidade integral do locatário.</p>
+                </div>
+
+                <!-- Conteúdo: Cancelamento e Repasses -->
+                <div id="pol-content-cancelamento" class="hidden p-6 sm:p-8 space-y-4 text-sm text-slate-600 leading-relaxed">
+                    <h3 class="text-lg font-extrabold text-slate-900">1. Política de Cancelamento</h3>
+                    <p>Cancelamentos realizados com até <strong>12 horas de antecedência</strong> da retirada do veículo ou início do carreto possuem reembolso integral. Cancelamentos tardios estão sujeitos a taxa administrativa de 20% para compensação do parceiro.</p>
+                    <h3 class="text-lg font-extrabold text-slate-900 pt-2">2. Garantia de Pagamento</h3>
+                    <p>O valor pago fica retido sob custódia da plataforma e só é repassado ao proprietário ou motorista após a conclusão do frete ou devolução regular do automóvel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Enxuto (Sem opção de contato e com e-mail finance) -->
+    <footer class="bg-white text-slate-600 py-12 border-t border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-8 text-sm">
+            <div>
+                <div class="flex items-center gap-2 text-slate-900 mb-4">
+                    <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white">
+                        <i class="fa-solid fa-route text-sm"></i>
+                    </div>
+                    <span class="text-lg font-extrabold">MoveCar</span>
+                </div>
+                <p class="leading-relaxed text-slate-500">Plataforma de intermediação digital para locação de veículos particulares e transporte de pequenas mudanças parciais.</p>
+            </div>
+            <div>
+                <h4 class="text-slate-900 font-bold mb-3">Modalidades</h4>
+                <ul class="space-y-2 text-slate-500">
+                    <li><a href="#simulador" onclick="switchMode('frete')" class="hover:text-brand-600 transition">Pequenos Carretos</a></li>
+                    <li><a href="#simulador" onclick="switchMode('frete')" class="hover:text-brand-600 transition">Transporte de Itens Avulsos</a></li>
+                    <li><a href="#simulador" onclick="switchMode('locacao')" class="hover:text-brand-600 transition">Locação de Carros Direto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-slate-900 font-bold mb-3">Financeiro & Institucional</h4>
+                <ul class="space-y-2 text-slate-500">
+                    <li><i class="fa-solid fa-envelope mr-2 text-brand-600"></i> financeiroautocaraluguel@gmail.com</li>
+                    <li><a href="#politicas" onclick="switchPolicyTab('privacidade')" class="hover:text-brand-600 transition">Política de Privacidade e Termos</a></li>
+                    <li><a href="#politicas" onclick="switchPolicyTab('mudancas')" class="hover:text-brand-600 transition">Regras para Mudanças Parciais</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 pt-6 border-t border-stone-200 text-center text-xs text-slate-400">
+            &copy; 2026 MoveCar Intermediações Ltda. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <!-- Modal de Reserva / Solicitação -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeBookingModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-stone-100 text-slate-500 hover:text-slate-800 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3"></div>
+            <h3 id="modal-title" class="text-xl font-extrabold text-slate-900"></h3>
+            <p id="modal-subtitle" class="text-sm text-slate-500 mt-1 mb-5"></p>
+
+            <form onsubmit="confirmBooking(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Seu Nome Completo</label>
+                    <input type="text" required placeholder="Digite seu nome" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Seu E-mail</label>
+                    <input type="email" required placeholder="seuemail@exemplo.com" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div class="bg-stone-50 p-3.5 rounded-xl border border-stone-200 flex justify-between items-center">
+                    <span class="text-sm text-slate-600 font-medium">Valor de referência:</span>
+                    <span id="modal-price" class="text-lg font-extrabold text-brand-600"></span>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition">
+                    Solicitar Intermediação
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Cadastro de Parceiro -->
+    <div id="partner-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closePartnerModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-stone-100 text-slate-500 hover:text-slate-800 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-extrabold text-slate-900">Seja um Parceiro MoveCar</h3>
+            <p class="text-sm text-slate-500 mt-1 mb-5">Cadastre seu veículo para locação ou pequenos fretes.</p>
+
+            <form onsubmit="submitPartner(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nome / Razão Social</label>
+                    <input type="text" required placeholder="Seu nome" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">E-mail para Contato</label>
+                    <input type="email" required placeholder="seuemail@exemplo.com" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Modalidade de Atuação</label>
+                    <select class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                        <option>Motorista de Pequenos Fretes / Carretos</option>
+                        <option>Disponibilizar Carro para Locação</option>
+                        <option>Ambos</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Modelo e Ano do Veículo</label>
+                    <input type="text" required placeholder="Ex: Fiat Fiorino 2022 ou Hyundai HB20 2023" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl shadow-lg transition">
+                    Enviar Cadastro para Análise
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 max-w-sm w-full bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-slate-700 flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center shrink-0 mt-0.5">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div class="flex-1">
+            <h4 id="toast-title" class="text-sm font-bold">Sucesso!</h4>
+            <p id="toast-message" class="text-xs text-slate-300 mt-1"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript da Aplicação -->
+    <script>
+        // Dados simulados dos veículos e prestadores
+        const fleetData = [
+            {
+                id: 1,
+                type: 'carreto',
+                badge: 'Pequena Mudança',
+                badgeColor: 'bg-orange-100 text-orange-800',
+                title: 'Fiat Fiorino Furgão 1.4',
+                owner: 'Carlos Mendes • 4.9 ★ (142 fretes)',
+                capacity: 'Até 650kg • Ideal para eletrodomésticos e caixas',
+                priceLabel: 'A partir de R$ 95',
+                priceValue: 'R$ 95,00 / trajeto base',
+                icon: 'fa-truck-field'
+            },
+            {
+                id: 2,
+                type: 'locacao',
+                badge: 'Locação Direta',
+                badgeColor: 'bg-teal-100 text-teal-800',
+                title: 'Hyundai HB20 1.0 Comfort',
+                owner: 'Mariana Costa • 5.0 ★ (38 locações)',
+                capacity: '5 lugares • Ar-condicionado • Flex • Econômico',
+                priceLabel: 'R$ 115 / dia',
+                priceValue: 'R$ 115,00 / diária',
+                icon: 'fa-car-side'
+            },
+            {
+                id: 3,
+                type: 'carreto',
+                badge: 'Pequena Mudança',
+                badgeColor: 'bg-orange-100 text-orange-800',
+                title: 'Renault Master Furgão Médio',
+                owner: 'Roberto Alves • 4.8 ★ (96 fretes)',
+                capacity: 'Até 1.200kg • Ideal para sofá, cama e escritório',
+                priceLabel: 'A partir de R$ 160',
+                priceValue: 'R$ 160,00 / trajeto base',
+                icon: 'fa-van-shuttle'
+            },
+            {
+                id: 4,
+                type: 'locacao',
+                badge: 'Locação Direta',
+                badgeColor: 'bg-teal-100 text-teal-800',
+                title: 'Jeep Renegade Sport Automático',
+                owner: 'Lucas Ferreira • 4.9 ★ (54 locações)',
+                capacity: '5 lugares • Câmbio Automático • Multimídia',
+                priceLabel: 'R$ 190 / dia',
+                priceValue: 'R$ 190,00 / diária',
+                icon: 'fa-car'
+            },
+            {
+                id: 5,
+                type: 'carreto',
+                badge: 'Pequena Mudança',
+                badgeColor: 'bg-orange-100 text-orange-800',
+                title: 'VW Saveiro Cabine Simples',
+                owner: 'André Souza • 4.9 ★ (210 fretes)',
+                capacity: 'Caçamba aberta com cordas e lonas • Rápido na cidade',
+                priceLabel: 'A partir de R$ 85',
+                priceValue: 'R$ 85,00 / trajeto base',
+                icon: 'fa-truck-pickup'
+            },
+            {
+                id: 6,
+                type: 'locacao',
+                badge: 'Locação Direta',
+                badgeColor: 'bg-teal-100 text-teal-800',
+                title: 'Chevrolet Onix Plus Sedan',
+                owner: 'Fernanda Lima • 5.0 ★ (29 locações)',
+                capacity: 'Porta-malas 469L • Ótimo para viagens curtas',
+                priceLabel: 'R$ 145 / dia',
+                priceValue: 'R$ 145,00 / diária',
+                icon: 'fa-car-rear'
+            }
+        ];
+
+        // Dados iniciais do Mural de Pedidos
+        let openRequests = [
+            {
+                type: 'Pequena Mudança',
+                route: 'Vila Mariana → Bela Vista (SP)',
+                details: '1 geladeira duplex, 1 micro-ondas e 4 caixas organizadoras.',
+                estimate: 'R$ 155,00',
+                time: 'Há 8 min'
+            },
+            {
+                type: 'Locação de Carro',
+                route: 'Retirada em Campinas - Centro',
+                details: 'Carro compacto por 4 diárias para viagem a trabalho.',
+                estimate: 'R$ 440,00',
+                time: 'Há 22 min'
+            }
+        ];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFleet('todos');
+            renderRequests();
+            
+            const dateInput = document.getElementById('locacao-inicio');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.value = today;
+                dateInput.min = today;
+            }
+        });
+
+        // Alternar Menu Mobile
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Scroll suave até o simulador
+        function scrollToSimulator() {
+            document.getElementById('simulador').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Alternar Abas do Simulador
+        function switchMode(mode) {
+            const tabFrete = document.getElementById('tab-frete');
+            const tabLocacao = document.getElementById('tab-locacao');
+            const formFrete = document.getElementById('form-frete');
+            const formLocacao = document.getElementById('form-locacao');
+
+            if (mode === 'frete') {
+                tabFrete.className = 'flex-1 sm:flex-initial flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-sm font-bold transition-all bg-brand-600 text-white shadow-sm';
+                tabLocacao.className = 'flex-1 sm:flex-initial flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-slate-900';
+                formFrete.classList.remove('hidden');
+                formLocacao.classList.add('hidden');
+            } else {
+                tabLocacao.className = 'flex-1 sm:flex-initial flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-sm font-bold transition-all bg-brand-600 text-white shadow-sm';
+                tabFrete.className = 'flex-1 sm:flex-initial flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-slate-900';
+                formLocacao.classList.remove('hidden');
+                formFrete.classList.add('hidden');
+            }
+        }
+
+        // Atualizar Cálculo em Tempo Real
+        function updateEstimate() {
+            const porte = parseFloat(document.getElementById('frete-porte').value) || 0;
+            const ajudante = parseFloat(document.getElementById('frete-ajudante').value) || 0;
+            const totalFrete = porte + ajudante;
+            document.getElementById('frete-estimativa').innerText = totalFrete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+            const diaria = parseFloat(document.getElementById('locacao-categoria').value) || 110;
+            const dias = parseInt(document.getElementById('locacao-dias').value) || 1;
+            const totalLocacao = diaria * Math.max(1, dias);
+            document.getElementById('locacao-estimativa').innerText = totalLocacao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        // Enviar Cotação e Adicionar ao Mural
+        function handleQuoteSubmit(e, type) {
+            e.preventDefault();
+            if (type === 'frete') {
+                const origem = document.getElementById('frete-origem').value;
+                const destino = document.getElementById('frete-destino').value;
+                const itens = document.getElementById('frete-itens').value;
+                const valor = document.getElementById('frete-estimativa').innerText;
+
+                openRequests.unshift({
+                    type: 'Pequena Mudança',
+                    route: `${origem} → ${destino}`,
+                    details: itens,
+                    estimate: valor,
+                    time: 'Agora mesmo'
+                });
+                e.target.reset();
+                updateEstimate();
+                showToast('Pedido de carreto publicado!', 'Motoristas próximos já estão visualizando sua solicitação.');
+            } else {
+                const local = document.getElementById('locacao-local').value;
+                const catSelect = document.getElementById('locacao-categoria');
+                const catText = catSelect.options[catSelect.selectedIndex].text.split('(')[0].trim();
+                const dias = document.getElementById('locacao-dias').value;
+                const valor = document.getElementById('locacao-estimativa').innerText;
+
+                openRequests.unshift({
+                    type: 'Locação de Carro',
+                    route: `Retirada em ${local}`,
+                    details: `Categoria ${catText} por ${dias} diária(s).`,
+                    estimate: valor,
+                    time: 'Agora mesmo'
+                });
+                showToast('Busca enviada aos proprietários!', 'Confira os veículos disponíveis abaixo ou aguarde propostas.');
+            }
+            renderRequests();
+            document.getElementById('pedidos-abertos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Renderizar Cards da Frota
+        function renderFleet(filter) {
+            const grid = document.getElementById('fleet-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'todos' ? fleetData : fleetData.filter(item => item.type === filter);
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl border border-stone-200 p-6 flex flex-col justify-between hover:shadow-xl hover:border-brand-300 transition-all duration-200';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold ${item.badgeColor}">${item.badge}</span>
+                            <div class="w-10 h-10 rounded-2xl bg-stone-100 text-slate-700 flex items-center justify-center text-lg">
+                                <i class="fa-solid ${item.icon}"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-extrabold text-slate-900">${item.title}</h3>
+                        <p class="text-xs font-medium text-slate-500 mt-1">${item.owner}</p>
+                        <p class="text-sm text-slate-600 mt-3 bg-stone-50 p-3.5 rounded-2xl border border-stone-100">${item.capacity}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Valor estimado</span>
+                            <span class="text-base font-extrabold text-slate-900">${item.priceLabel}</span>
+                        </div>
+                        <button onclick="openBookingModal(${item.id})" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-sm">
+                            Reservar
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filtrar Frota
+        function filterFleet(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.className = 'filter-btn active px-4 py-2 rounded-xl text-sm font-semibold bg-brand-600 text-white transition';
+                } else {
+                    btn.className = 'filter-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-stone-100 transition';
+                }
+            });
+            renderFleet(category);
+        }
+
+        // Renderizar Mural de Pedidos
+        function renderRequests() {
+            const list = document.getElementById('requests-list');
+            list.innerHTML = '';
+
+            openRequests.forEach(req => {
+                const isFrete = req.type === 'Pequena Mudança';
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4';
+                card.innerHTML = `
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold ${isFrete ? 'bg-orange-100 text-orange-800' : 'bg-teal-100 text-teal-800'}">
+                                ${req.type}
+                            </span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i>${req.time}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm sm:text-base">${req.route}</h4>
+                        <p class="text-xs sm:text-sm text-slate-600">${req.details}</p>
+                    </div>
+                    <div class="sm:text-right shrink-0 border-t sm:border-t-0 pt-3 sm:pt-0 border-stone-100">
+                        <span class="text-xs text-slate-400 block">Orçamento estimado</span>
+                        <span class="text-lg font-extrabold text-brand-600">${req.estimate}</span>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        // Controles do Modal de Reserva
+        function openBookingModal(id) {
+            const item = fleetData.find(f => f.id === id);
+            if (!item) return;
+
+            const badge = document.getElementById('modal-badge');
+            badge.className = `inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 ${item.badgeColor}`;
+            badge.innerText = item.badge;
+
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-subtitle').innerText = item.owner;
+            document.getElementById('modal-price').innerText = item.priceValue;
+
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+
+        function confirmBooking(e) {
+            e.preventDefault();
+            closeBookingModal();
+            e.target.reset();
+            showToast('Solicitação enviada!', 'Você receberá os detalhes da intermediação por e-mail em instantes.');
+        }
+
+        // Controles do Modal de Parceiro
+        function openPartnerModal() {
+            document.getElementById('partner-modal').classList.remove('hidden');
+        }
+
+        function closePartnerModal() {
+            document.getElementById('partner-modal').classList.add('hidden');
+        }
+
+        function submitPartner(e) {
+            e.preventDefault();
+            closePartnerModal();
+            e.target.reset();
+            showToast('Cadastro recebido!', 'Nossa equipe validará os documentos do seu veículo em até 24 horas.');
+        }
+
+        // Notificação Toast
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-message').innerText = message;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 4500);
+        }
+
+        // Alternar Abas da Seção de Políticas
+        function switchPolicyTab(tabName) {
+            const tabs = ['privacidade', 'mudancas', 'locacao', 'cancelamento'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`pol-tab-${t}`);
+                const content = document.getElementById(`pol-content-${t}`);
+                if (t === tabName) {
+                    btn.className = 'px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-brand-600 text-white transition';
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = 'px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-white transition';
+                    content.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+```
